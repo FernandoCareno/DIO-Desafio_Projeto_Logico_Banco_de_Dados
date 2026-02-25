@@ -45,7 +45,7 @@
 	 
 -- 6. Relação Produto x Fornecedor x Estoque
      SELECT 
-         pr.nome AS produto,
+         pr.nome        AS produto,
          f.razao_social AS fornecedor,
          e.local,
          pe.quantidade
