@@ -2,19 +2,19 @@
 --Cliente 
 CREATE TABLE cliente (
     idCliente INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE
+    nome      VARCHAR(100) NOT NULL,
+    email     VARCHAR(100) UNIQUE
 );
 
 CREATE TABLE cliente_pf (
     idCliente INT PRIMARY KEY,
-    cpf VARCHAR(14) UNIQUE NOT NULL,
+    cpf       VARCHAR(14) UNIQUE NOT NULL,
     FOREIGN KEY (idCliente) REFERENCES cliente(idCliente)
 );
 
 CREATE TABLE cliente_pj (
-    idCliente INT PRIMARY KEY,
-    cnpj VARCHAR(18) UNIQUE NOT NULL,
+    idCliente    INT PRIMARY KEY,
+    cnpj         VARCHAR(18) UNIQUE NOT NULL,
     razao_social VARCHAR(100) NOT NULL,
     FOREIGN KEY (idCliente) REFERENCES cliente(idCliente)
 );
@@ -22,22 +22,22 @@ CREATE TABLE cliente_pj (
 --Produto
 CREATE TABLE produto (
     idProduto INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
+    nome      VARCHAR(100) NOT NULL,
     categoria VARCHAR(50),
-    preco FLOAT NOT NULL
+    preco     FLOAT NOT NULL
 );
 
 --Fornecedor
 CREATE TABLE fornecedor (
     idFornecedor INT AUTO_INCREMENT PRIMARY KEY,
     razao_social VARCHAR(100) NOT NULL,
-    cnpj VARCHAR(18) UNIQUE NOT NULL
+    cnpj         VARCHAR(18) UNIQUE NOT NULL
 );
 
 --Produto disponibilizado por fornecedor
 CREATE TABLE fornecedor_produto (
     idFornecedor INT,
-    idProduto INT,
+    idProduto    INT,
     PRIMARY KEY (idFornecedor, idProduto),
     FOREIGN KEY (idFornecedor) REFERENCES fornecedor(idFornecedor),
     FOREIGN KEY (idProduto) REFERENCES produto(idProduto)
@@ -46,12 +46,12 @@ CREATE TABLE fornecedor_produto (
 --Estoque
 CREATE TABLE estoque (
     idEstoque INT AUTO_INCREMENT PRIMARY KEY,
-    local VARCHAR(100)
+    local     VARCHAR(100)
 );
 
 CREATE TABLE produto_estoque (
-    idProduto INT,
-    idEstoque INT,
+    idProduto  INT,
+    idEstoque  INT,
     quantidade INT,
     PRIMARY KEY (idProduto, idEstoque),
     FOREIGN KEY (idProduto) REFERENCES produto(idProduto),
@@ -60,18 +60,18 @@ CREATE TABLE produto_estoque (
 
 --Pedido
 CREATE TABLE pedido (
-    idPedido INT AUTO_INCREMENT PRIMARY KEY,
+    idPedido  INT AUTO_INCREMENT PRIMARY KEY,
     idCliente INT,
-    status VARCHAR(50),
+    status    VARCHAR(50),
     descricao VARCHAR(200),
-    frete FLOAT,
+    frete     FLOAT,
     FOREIGN KEY (idCliente) REFERENCES cliente(idCliente)
 );
 
 --Relação Produto x Pedido
 CREATE TABLE pedido_produto (
-    idPedido INT,
-    idProduto INT,
+    idPedido   INT,
+    idProduto  INT,
     quantidade INT,
     PRIMARY KEY (idPedido, idProduto),
     FOREIGN KEY (idPedido) REFERENCES pedido(idPedido),
@@ -81,17 +81,17 @@ CREATE TABLE pedido_produto (
 --Pagamento
 CREATE TABLE pagamento (
     idPagamento INT AUTO_INCREMENT PRIMARY KEY,
-    idPedido INT,
-    tipo VARCHAR(50),
-    valor FLOAT,
+    idPedido    INT,
+    tipo        VARCHAR(50),
+    valor       FLOAT,
     FOREIGN KEY (idPedido) REFERENCES pedido(idPedido)
 );
 
 --Entrega
 CREATE TABLE entrega (
-    idEntrega INT AUTO_INCREMENT PRIMARY KEY,
-    idPedido INT,
-    status VARCHAR(50),
+    idEntrega       INT AUTO_INCREMENT PRIMARY KEY,
+    idPedido        INT,
+    status          VARCHAR(50),
     codigo_rastreio VARCHAR(100),
     FOREIGN KEY (idPedido) REFERENCES pedido(idPedido)
 );
